@@ -1,5 +1,6 @@
 package utilities;
 
+import Lesson_16.AndroidServerFlagEx;
 import caps.MobileCapabilityTypeEx;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -16,6 +17,7 @@ public class DriverFactory {
 
     public static void startAppiumServer() {
         AppiumServiceBuilder appiumServerBuilder = new AppiumServiceBuilder();
+        appiumServerBuilder.withArgument(AndroidServerFlagEx.ALLOW_INSECURE, "chromedriver_autodownload"); // Manage Chrome driver automatically
         appiumServerBuilder.withIPAddress("127.0.0.1").usingAnyFreePort();
         appiumServer = AppiumDriverLocalService.buildService(appiumServerBuilder);
         appiumServer.start();
@@ -41,12 +43,13 @@ public class DriverFactory {
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.PLATFORM_NAME, "Android");
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.AUTOMATION_NAME, "uiautomator2");
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.UDID, "emulator-5554");
+        desiredCapabilities.setCapability("avd", "android_28"); // Automatically launch android virtual device - "android_28": avd name
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.APP_PACKAGE, "com.wdiodemoapp");
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.APP_ACTIVITY, "com.wdiodemoapp.MainActivity");
         desiredCapabilities.setCapability(MobileCapabilityTypeEx.NEW_COMMAND_TIMEOUT, 120);
 
         androidDriver = new AndroidDriver<>(appiumServer.getUrl(), desiredCapabilities);
-        androidDriver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
+        androidDriver.manage().timeouts().implicitlyWait(3L, TimeUnit.SECONDS);
         return androidDriver;
     }
 }
