@@ -1,7 +1,8 @@
-package Lesson_16;
+package modules.Lesson_16;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import objects.MenuItem;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import utilities.DriverFactory;

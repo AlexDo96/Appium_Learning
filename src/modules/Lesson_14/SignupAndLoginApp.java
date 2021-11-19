@@ -1,4 +1,4 @@
-package Lesson_14;
+package modules.Lesson_14;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;

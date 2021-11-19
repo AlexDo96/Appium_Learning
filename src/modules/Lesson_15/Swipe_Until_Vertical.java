@@ -1,4 +1,4 @@
-package Lesson_15;
+package modules.Lesson_15;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -13,7 +13,7 @@ import utilities.DriverFactory;
 import java.time.Duration;
 import java.util.List;
 
-public class Swipe_Until_Horizontal {
+public class Swipe_Until_Vertical {
     public static void main(String[] args) {
         DriverFactory.startAppiumServer();
 
@@ -34,10 +34,10 @@ public class Swipe_Until_Horizontal {
             int screenWidth = windowSize.getWidth();
 
             // Calculate touch point
-            int xStartPoint = 50 * screenWidth / 100;
-            int xEndPoint = 10 * screenWidth / 100;
-            int yStartPoint = 50 * screenHeight / 100;
-            int yEndPoint = yStartPoint;
+            int xStartPoint = 30 * screenWidth / 100;
+            int xEndPoint = xStartPoint;
+            int yStartPoint = 90 * screenHeight / 100;
+            int yEndPoint = 40 * screenHeight / 100;
 
             // Convert to PointOptions - Coordinates
             PointOption startPoint = new PointOption().withCoordinates(xStartPoint, yStartPoint);
@@ -50,7 +50,7 @@ public class Swipe_Until_Horizontal {
 
             while (swipeTime < MAX_SWIPE_TIME) {
                 // Using findElements -> When element is found, put it in List<MobileElement>
-                List<MobileElement> matchedCards = androidDriver.findElementsByXPath("//*[@text='EXTENDABLE']");
+                List<MobileElement> matchedCards = androidDriver.findElementsByXPath("//*[@text='You found me!!!']");
                 if (!matchedCards.isEmpty()) {
                     break;
                 }

@@ -1,6 +1,6 @@
 package utilities;
 
-import Lesson_16.AndroidServerFlagEx;
+import caps.AndroidServerFlagEx;
 import caps.MobileCapabilityTypeEx;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;

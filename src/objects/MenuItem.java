@@ -1,4 +1,4 @@
-package Lesson_16;
+package objects;
 
 public class MenuItem {
     private String text;

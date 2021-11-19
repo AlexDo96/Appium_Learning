@@ -1,4 +1,4 @@
-package Lesson_15;
+package modules.Lesson_15;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -11,21 +11,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.DriverFactory;
 
 import java.time.Duration;
+import java.util.List;
 
-public class Swipe_Vertical {
+public class Swipe_Until_Horizontal {
     public static void main(String[] args) {
         DriverFactory.startAppiumServer();
 
         try {
             AppiumDriver<MobileElement> androidDriver = DriverFactory.getAndroidDriver();
 
-            // Click Forms label
-            MobileElement formsLabel = androidDriver.findElementByAccessibilityId("Forms");
-            formsLabel.click();
+            // Click Swipe label
+            MobileElement swipeLabel = androidDriver.findElementByAccessibilityId("Swipe");
+            swipeLabel.click();
 
-            // Check to see whether we are on Forms screen
+            // Check to see whether we are on Swipe screen
             WebDriverWait wait = new WebDriverWait(androidDriver, 30L);
-            wait.until(ExpectedConditions.visibilityOf(androidDriver.findElementByAccessibilityId("switch")));
+            wait.until(ExpectedConditions.visibilityOf(androidDriver.findElementByXPath("//*[@text='Swipe horizontal']")));
 
             // Get Mobile window size
             Dimension windowSize = androidDriver.manage().window().getSize();
@@ -34,9 +35,9 @@ public class Swipe_Vertical {
 
             // Calculate touch point
             int xStartPoint = 50 * screenWidth / 100;
-            int xEndPoint = xStartPoint;
-            int yStartPoint = 90 * screenHeight / 100;
-            int yEndPoint = 10 * screenHeight / 100;
+            int xEndPoint = 10 * screenWidth / 100;
+            int yStartPoint = 50 * screenHeight / 100;
+            int yEndPoint = yStartPoint;
 
             // Convert to PointOptions - Coordinates
             PointOption startPoint = new PointOption().withCoordinates(xStartPoint, yStartPoint);
@@ -44,19 +45,26 @@ public class Swipe_Vertical {
 
             // Perform Touch actions
             TouchAction touchAction = new TouchAction(androidDriver);
+            int MAX_SWIPE_TIME = 5;
+            int swipeTime = 0;
 
-            // Swipe up
-            touchAction
-                    .press(startPoint)
-                    .waitAction(new WaitOptions().withDuration(Duration.ofMillis(1000)))
-                    .moveTo(endPoint)
-                    .release()
-                    .perform(); // without this, will be no action at all
+            while (swipeTime < MAX_SWIPE_TIME) {
+                // Using findElements -> When element is found, put it in List<MobileElement>
+                List<MobileElement> matchedCards = androidDriver.findElementsByXPath("//*[@text='EXTENDABLE']");
+                if (!matchedCards.isEmpty()) {
+                    break;
+                }
 
+                // Swipe
+                touchAction
+                        .press(startPoint)
+                        .waitAction(new WaitOptions().withDuration(Duration.ofMillis(500)))
+                        .moveTo(endPoint)
+                        .release()
+                        .perform(); // without this, will be no action at all
 
-            // Click on [Active] button
-            MobileElement activeBtn = androidDriver.findElementByAccessibilityId("button-Active");
-            activeBtn.click();
+                swipeTime++;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -1,4 +1,4 @@
-package Lesson_16;
+package caps;
 
 import io.appium.java_client.service.local.flags.ServerArgument;
 
